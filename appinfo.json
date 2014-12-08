@@ -1,0 +1,25 @@
+{
+    "appKeys": {},
+    "capabilities": [
+        ""
+    ],
+    "companyName": "demmydemon@gmail.com",
+    "longName": "RedPanda",
+    "projectType": "native",
+    "resources": {
+        "media": [
+            {
+                "file": "images/Tails_glasses.png",
+                "name": "IMAGE_TAILS_SMALL",
+                "type": "png"
+            }
+        ]
+    },
+    "shortName": "RedPanda",
+    "uuid": "38c09c08-66c8-4049-abaf-41657ff86f89",
+    "versionCode": 1,
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": true
+    }
+}
