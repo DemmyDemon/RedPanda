@@ -12,7 +12,12 @@
                 "file": "images/Tails_glasses.png",
                 "name": "IMAGE_TAILS_SMALL",
                 "type": "png"
-            }
+            },
+	    {
+	    	"file": "images/Tails_Dark.png",
+		"name": "IMAGE_TAILS_DARK",
+		"type": "png"
+	    }
         ]
     },
     "shortName": "RedPanda",
