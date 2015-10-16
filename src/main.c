@@ -56,6 +56,7 @@ static void main_window_load(Window *window){
   text_layer_set_text_color(s_time_layer,GColorWhite);
   text_layer_set_text(s_time_layer,"TIME!");
   text_layer_set_font(s_time_layer,fonts_get_system_font(FONT_KEY_ROBOTO_BOLD_SUBSET_49));
+  //text_layer_set_font(s_time_layer,fonts_get_system_font(FONT_KEY_ROBOTO_CONDENSED_21));
   text_layer_set_text_alignment(s_time_layer,GTextAlignmentCenter);
   layer_add_child(window_get_root_layer(window),text_layer_get_layer(s_time_layer));
   
@@ -101,18 +102,15 @@ static void main_window_unload(Window *window){
 }
 
 static void tick_handler(struct tm *tick_time, TimeUnits units_changed){
-  if (units_changed == MINUTE_UNIT){
-    update_time(tick_time);
-  }
-  else if (units_changed == HOUR_UNIT){
-    update_time(tick_time);
+  update_time(tick_time);
+  if (units_changed == HOUR_UNIT){
     update_date(tick_time);
   }
 }
 
 static void init(){
   s_main_window = window_create();
-  window_set_fullscreen(s_main_window,true);
+  //window_set_fullscreen(s_main_window,true);
   window_set_window_handlers(s_main_window,(WindowHandlers) {
     .load = main_window_load,
     .unload = main_window_unload
@@ -122,6 +120,7 @@ static void init(){
   // Subscribe to events
   battery_state_service_subscribe(battery_state_change_handler);
   tick_timer_service_subscribe(MINUTE_UNIT,tick_handler);
+  //tick_timer_service_subscribe(SECOND_UNIT,tick_handler);
   
   window_stack_push(s_main_window, true);
 }
