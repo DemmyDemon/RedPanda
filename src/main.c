@@ -21,9 +21,12 @@ static void update_date(struct tm *tick_time){
 }
 
 static void battery_state_change_handler(BatteryChargeState state){
-  static char buffer[4];
-  snprintf(buffer, 4, "%u%%",state.charge_percent);
+  static char buffer[5];
+  snprintf(buffer, 5, "%u%%",state.charge_percent);
   text_layer_set_text(s_watch_power_layer,buffer);
+  if (state.charge_percent < 30 && !state.is_charging){
+    vibes_long_pulse();
+  }
 }
 
 static void bt_connection_state_change_handler(bool bt_connected){
@@ -42,7 +45,7 @@ static void bt_connection_state_change_handler(bool bt_connected){
 static void main_window_load(Window *window){
   
   // PICTURE LAYER
-  s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_TAILS_SMALL);
+  s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_TAILS_DARK);
   s_background_layer = bitmap_layer_create(GRect(0,60,144,108));
   bitmap_layer_set_bitmap(s_background_layer, s_background_bitmap);
   layer_add_child(window_get_root_layer(window),bitmap_layer_get_layer(s_background_layer));
@@ -66,21 +69,21 @@ static void main_window_load(Window *window){
   layer_add_child(window_get_root_layer(window),text_layer_get_layer(s_date_layer));
   
   // WATCH POWER LAYER
-  s_watch_power_layer = text_layer_create(GRect(112,152,33,16));
+  s_watch_power_layer = text_layer_create(GRect(44,144,100,24));
   text_layer_set_background_color(s_watch_power_layer,GColorClear);
-  text_layer_set_text_color(s_watch_power_layer,GColorBlack);
+  text_layer_set_text_color(s_watch_power_layer,GColorWhite);
   text_layer_set_text(s_watch_power_layer,"PWR!");
-  text_layer_set_font(s_watch_power_layer,fonts_get_system_font(FONT_KEY_GOTHIC_14_BOLD));
+  text_layer_set_font(s_watch_power_layer,fonts_get_system_font(FONT_KEY_GOTHIC_24));
   text_layer_set_text_alignment(s_watch_power_layer,GTextAlignmentRight);
   layer_add_child(window_get_root_layer(window),text_layer_get_layer(s_watch_power_layer));
   battery_state_change_handler(battery_state_service_peek());
   
   // BT Connection layer
-  s_bt_connection_layer = text_layer_create(GRect(0,152,50,16));
+  s_bt_connection_layer = text_layer_create(GRect(0,144,80,24));
   text_layer_set_background_color(s_bt_connection_layer,GColorClear);
-  text_layer_set_text_color(s_bt_connection_layer,GColorBlack);
+  text_layer_set_text_color(s_bt_connection_layer,GColorWhite);
   text_layer_set_text(s_bt_connection_layer,"Online");
-  text_layer_set_font(s_bt_connection_layer,fonts_get_system_font(FONT_KEY_GOTHIC_14_BOLD));
+  text_layer_set_font(s_bt_connection_layer,fonts_get_system_font(FONT_KEY_GOTHIC_24));
   text_layer_set_text_alignment(s_bt_connection_layer,GTextAlignmentLeft);
   layer_add_child(window_get_root_layer(window),text_layer_get_layer(s_bt_connection_layer));
   bluetooth_connection_service_subscribe(bt_connection_state_change_handler);
@@ -102,6 +105,7 @@ static void tick_handler(struct tm *tick_time, TimeUnits units_changed){
     update_time(tick_time);
   }
   else if (units_changed == HOUR_UNIT){
+    update_time(tick_time);
     update_date(tick_time);
   }
 }
@@ -114,10 +118,10 @@ static void init(){
     .unload = main_window_unload
   });
   
-  tick_timer_service_subscribe(MINUTE_UNIT,tick_handler);
-  tick_timer_service_subscribe(HOUR_UNIT  ,tick_handler);
-  
+
+  // Subscribe to events
   battery_state_service_subscribe(battery_state_change_handler);
+  tick_timer_service_subscribe(MINUTE_UNIT,tick_handler);
   
   window_stack_push(s_main_window, true);
 }

@@ -13,17 +13,22 @@
                 "name": "IMAGE_TAILS_SMALL",
                 "type": "png"
             },
-	    {
-	    	"file": "images/Tails_Dark.png",
-		"name": "IMAGE_TAILS_DARK",
-		"type": "png"
-	    }
+            {
+                "file": "images/Tails_Dark.png",
+                "name": "IMAGE_TAILS_DARK",
+                "type": "png"
+            }
         ]
     },
+    "sdkVersion": "3",
     "shortName": "RedPanda",
+    "targetPlatforms": [
+        "aplite",
+        "basalt",
+        "chalk"
+    ],
     "uuid": "38c09c08-66c8-4049-abaf-41657ff86f89",
-    "versionCode": 1,
-    "versionLabel": "1.0",
+    "versionLabel": "1.1",
     "watchapp": {
         "watchface": true
     }
