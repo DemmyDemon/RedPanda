@@ -103,7 +103,7 @@ static void main_window_unload(Window *window){
 
 static void tick_handler(struct tm *tick_time, TimeUnits units_changed){
   update_time(tick_time);
-  if (units_changed == HOUR_UNIT){
+  if (units_changed & DAY_UNIT){ 
     update_date(tick_time);
   }
 }

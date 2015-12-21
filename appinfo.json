@@ -11,7 +11,7 @@
             {
                 "file": "images/Tails_Dark.png",
                 "name": "IMAGE_TAILS_DARK",
-                "type": "png"
+                "type": "bitmap"
             }
         ]
     },
@@ -23,7 +23,7 @@
         "chalk"
     ],
     "uuid": "38c09c08-66c8-4049-abaf-41657ff86f89",
-    "versionLabel": "1.1",
+    "versionLabel": "1.2",
     "watchapp": {
         "watchface": true
     }
